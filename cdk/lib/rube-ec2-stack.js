@@ -1,8 +1,7 @@
 const cdk = require('@aws-cdk/core');
 const ec2 = require('@aws-cdk/aws-ec2');
+const s3 = require('@aws-cdk/aws-s3');
 const iam = require('@aws-cdk/aws-iam');
-const autoscaling = require('@aws-cdk/aws-autoscaling');
-const elbv2 = require('@aws-cdk/aws-elasticloadbalancingv2');
 const utils = require('../utils/lookup.js');
 
 class RubeEc2Stack extends cdk.Stack {
@@ -78,6 +77,27 @@ class RubeEc2Stack extends cdk.Stack {
       domain: 'vpc',
       instanceId: ec2Instance.instanceId,
     });
+    
+    new s3.Bucket(this, 'inputBucket', {
+      versioned: false,
+      bucketName: props.s3.bucketNameInput,
+      publicReadAccess: false
+    });
+    
+    new s3.Bucket(this, 'outputBucket', {
+      versioned: false,
+      bucketName: props.s3.bucketNameOutput,
+      publicReadAccess: false
+    });
+    
+    // Output load balancer dns 
+    /**
+    new cdk.CfnOutput(this, 'EIP', {
+      exportName: 'EIP',
+      value: ec2EIP.ip,
+      description: 'EIP for the webapp'
+    });    
+    */
   }
 }
 

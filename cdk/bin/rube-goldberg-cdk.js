@@ -5,6 +5,7 @@ const ec2 = require('@aws-cdk/aws-ec2');
 const { RubeVpcStack } = require('../lib/rube-vpc-stack');
 const { RubeEc2Stack } = require('../lib/rube-ec2-stack');
 const { RubeCommonStack } = require('../lib/rube-common-stack');
+const { RubeS3Stack } = require('../lib/rube-s3-stack');
 
 const app = new cdk.App();
 
@@ -56,3 +57,6 @@ var commonStack = new RubeCommonStack(app, props.stackName, props);
 
 props.stackName = 'rube-' + prefix + '-ec2';
 var ec2Stack = new RubeEc2Stack(app, props.stackName, props);
+
+props.stackName = 'rube-' + prefix + '-s3';
+var s3Stack = new RubeS3Stack(app, props.stackName, props);
