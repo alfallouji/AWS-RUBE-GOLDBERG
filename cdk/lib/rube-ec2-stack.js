@@ -45,7 +45,8 @@ class RubeEc2Stack extends cdk.Stack {
     });
     
     // allow instance to communicate with secrets manager & ssm (for debug purposes if needed)
-    role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName(props.instance.roleManagedPolicyName));
+    role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName(props.instance.roleManagedPolicyName1));
+    role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName(props.instance.roleManagedPolicyName2));    
     role.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName(props.iam.ssmManagedPolicyName));
     
     // User data that will deploy the application on the instance

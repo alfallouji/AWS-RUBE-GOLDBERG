@@ -19,6 +19,10 @@ php -r "if (hash_file('sha384', 'composer-setup.php') === '8a6138e2a05a8c28539c9
 php composer-setup.php
 php -r "unlink('composer-setup.php');"
 
+/bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
+/sbin/mkswap /var/swap.1
+/sbin/swapon /var/swap.1
+
 php composer.phar require aws/aws-sdk-php
 
 sudo systemctl restart php-fpm
