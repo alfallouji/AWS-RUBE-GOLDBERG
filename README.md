@@ -8,7 +8,7 @@
 <img src="https://github.com/alfallouji/AWS-RUBE-GOLDBERG/raw/master/webapp/img/2.png" />
 
 <h1>Create your own Rube Goldberg Machine in AWS</h1>
-<p class="lead"><a href="?action=replication">Deactivate the S3 replication</a> and replace it with your own RBM. You have to make sure that the message in the input bucket ultimately gets delivered in the output bucket. Make sure to read the rules of engagement below.</p>
+<p class="lead">Deactivate the S3 replication and replace it with your own RBM. You have to make sure that the message in the input bucket ultimately gets delivered in the output bucket. Make sure to read the rules of engagement below.</p>
 <img src="https://github.com/alfallouji/AWS-RUBE-GOLDBERG/raw/master/webapp/img/1.png" />
 
 <h1>Rules of engagement</h1>
