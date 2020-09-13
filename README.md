@@ -31,3 +31,10 @@
     <li class="list-group-item">If you have a question or are stuck, don't hesitate to ask for some help from an AWS specialist.</li>
   </ol>
 </div>    
+
+### todo's
+ - Lock S3 buckets output permissions
+ - Lock EC2 instance (ssh access)
+ - Think of a way to automatically count points
+ - Etc.
+ 
