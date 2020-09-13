@@ -225,11 +225,10 @@ if (!isset($_SESSION['messages'])) {
                     ?>
                             <form id='frm' action='?action=send' method='post'>
                                  <input class="btn btn-success btn-lg" type='submit' id='submit' name='submit' value='Something for nothing...' />
-                            </form>
-                            <h4>Previous messages</h4>
-                    <?php
-                    
+                            </form>                           
+                    <?php                    
                             if (!empty($_SESSION['messages'])) {
+                                echo '<h4>Previous messages</h4>';
                                 foreach ($_SESSION['messages'] as $message) { 
                                     echo '<a href="?action=check&id=' . $message . '">' . $message . '</a><br/>';
                                 }
