@@ -1,14 +1,15 @@
 # AWS-RUBE-GOLDBERG
 
-<h1>Initial Rube Goldberg Machine (RBM) in AWS</h1>
-<p class="lead">A simple RBM - send a message via this webapp that will get automatically replicated from one S3 bucket to another. The message is kept as-is and the replication happens within 15 minutes (usually much faster).</p>
+<h1>Initial Rube Goldberg Machine (RGM) in AWS</h1>
+<h2>From one bucket to another</h2>
+<p class="lead">You will start with a simple RGM. You can send a message via this webapp that will get automatically replicated from one S3 bucket to another. The message is kept as-is and the replication happens within 15 minutes (usually much faster).</p>
 <img src="https://github.com/alfallouji/AWS-RUBE-GOLDBERG/raw/master/webapp/img/1.png" />
 
-<p class="lead">You can also use this webapp to check if the message has been successfully delivered into the output/destination bucket.</p>
+<p class="lead">This same webapp can be used to check if the message has been successfully delivered into the output/destination bucket.</p>
 <img src="https://github.com/alfallouji/AWS-RUBE-GOLDBERG/raw/master/webapp/img/2.png" />
 
 <h1>Create your own Rube Goldberg Machine in AWS</h1>
-<p class="lead">Deactivate the S3 replication and replace it with your own RBM. You have to make sure that the message in the input bucket ultimately gets delivered in the output bucket. Make sure to read the rules of engagement below.</p>
+<p class="lead">Your first step is to deactivate the S3 replication and replace it with your own Rube Goldberg Machine. You have to make sure that the message in the input bucket ultimately gets delivered in the output bucket. Make sure to read the rules of engagement below.</p>
 <img src="https://github.com/alfallouji/AWS-RUBE-GOLDBERG/raw/master/webapp/img/3.png" />
 
 <h1>Rules of engagement</h1>
