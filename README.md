@@ -19,7 +19,7 @@
 
   <!-- List group -->
   <ol class="list-group">
-    <li class="list-group-item">Do not delete or modify the configuration of the input, the name of the output file, the output buckets and this EC2 instance.</li>
+    <li class="list-group-item">Do not delete or modify the configuration of the input, the name of the output file, the output buckets and the EC2 instance.</li>
     <li class="list-group-item">Each AWS service used will give your team 10 points. Using the exact same service several times will not give you any additional points (with the exception of the services used by the initial setup).</li>
     <li class="list-group-item">Each AWS service used must serve a purpose. It must receive an input from the machine and provide an output to the next component(s).</li>
     <li class="list-group-item">There is a maximum execution time of 15 minutes for your Rube Goldberg Machine. You will loose all points if it takes more time for your message to show up in the output bucket.</li>
