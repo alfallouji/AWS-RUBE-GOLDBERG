@@ -27,7 +27,7 @@
     <li class="list-group-item">You should present your demo in the following order : First, start by generating a new message via this webapp. Then, show us an overview of the architecture of your Rube Goldberg machine and finally show us the output (using this webapp).</li>
     <li class="list-group-item">The following services are not available to be used: route53, etc. </li>
     <li class="list-group-item">The key to victory is to think out of the box. Surprise (positively) the jury and you may have a chance to earn some bonus points.</li>
-    <li class="list-group-item">Every team starts with 0 point. Again, the services used by the initial RBM do not count (e.g. S3, EC2 instance). Therefore, you will get points if you use those in your RBM.</li>
+    <li class="list-group-item">Every team starts with 0 point. Again, the services used by the initial RGM do not count (e.g. S3, EC2 instance). Therefore, you will get points if you use those in your RGM.</li>
     <li class="list-group-item">You can use the console to provision and configure the new resources. If you automate the creation and configuration of a specific service via a script (e.g. cloudformation), you will double your points for that specific service.</li>
     <li class="list-group-item">If you have a question or are stuck, don't hesitate to ask for some help from an AWS specialist.</li>
   </ol>
