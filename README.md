@@ -39,10 +39,11 @@
  - Think of a way to automatically count points
  - Add combo points 
  - Define what a service is and which one can be used (e.g. cant use saving plans or direct connect)
- - Etc.
- 
+
  |Service                      | Points|
  |-----------------------------|-------|
  | A                           | 10    |
+
+ - Etc.
  
  
