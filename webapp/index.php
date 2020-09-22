@@ -45,8 +45,7 @@ if (!isset($_SESSION['messages'])) {
               border-radius: 50%;
               text-align: center;
               box-shadow: 1px 1px 0 #999;
-            }
-            
+            }            
         </style>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
         <title>Rube Goldberg Challenge</title>
@@ -66,8 +65,7 @@ if (!isset($_SESSION['messages'])) {
                     $menus = array(
                         'instructions' => 'instructions',
                         'Send a message' => '?',
-                        's3 replication' => 'replication',
-                        
+                        's3 replication' => 'replication',                        
                     );
                     foreach ($menus as $menu => $link) { 
                         $class = '';
@@ -86,9 +84,7 @@ if (!isset($_SESSION['messages'])) {
          </nav>
 
         <div class="container">
-
            <div class="starter-template">
-
             <div id="content">
                 <div id="inner">
                     <?php
