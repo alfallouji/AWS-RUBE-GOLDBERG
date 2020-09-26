@@ -35,23 +35,6 @@ class RubeAllStack extends cdk.Stack {
             }
         ]
     });
-
-  
-    new s3.Bucket(this, props.s3.inputBucket, {
-      versioned: false,
-      bucketName: props.s3.inputBucket,
-      publicReadAccess: false,
-      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-      removalPolicy: cdk.RemovalPolicy.DESTROY
-    });
-    
-    new s3.Bucket(this, props.s3.outputBucket, {
-      versioned: false,
-      bucketName: props.s3.outputBucket,
-      publicReadAccess: false,
-      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
-      removalPolicy: cdk.RemovalPolicy.DESTROY
-    });
     
     // Security group for the guestbook app
     let clientSecurityGroup = new ec2.SecurityGroup(this, props.instance.securityGroupName, {

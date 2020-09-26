@@ -170,7 +170,7 @@ if (!isset($_SESSION['messages'])) {
                                 echo '<h4>Error while fetching S3 configuration rule.</h4>';
                                 var_dump($e->errorMessage);
                             }  
-                            echo 'Current status of the S3 Replication : ' . $replicationStatus; 
+                            echo 'Current status of the S3 Replication : <strong>' . $replicationStatus . '</strong>';
                             if ($replicationStatus == 'Enabled') { 
 ?>
                                 <form id='frm' action='?action=deactivate' method='post'style="margin-top:20px;">
@@ -224,10 +224,11 @@ if (!isset($_SESSION['messages'])) {
                             </form>                           
                     <?php                    
                             if (!empty($_SESSION['messages'])) {
-                                echo '<h4>Previous messages</h4>';
-                                foreach ($_SESSION['messages'] as $message) { 
-                                    echo '<a href="?action=check&id=' . $message . '">' . $message . '</a><br/>';
+                                echo '<h4 style="margin-top:40px;">Previous messages</h4><ul>';
+                                foreach ($_SESSION['messages'] as $message) {
+                                    echo '<li><a href="?action=check&id=' . $message . '">' . $message . '</a></li>';
                                 }
+                                echo '</ul>';
                             }
                         break;
                     }
