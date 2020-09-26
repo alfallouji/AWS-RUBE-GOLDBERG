@@ -4,7 +4,7 @@ const s3 = require('@aws-cdk/aws-s3');
 const iam = require('@aws-cdk/aws-iam');
 const utils = require('../utils/lookup.js');
 
-class RubeEc2Stack extends cdk.Stack {
+class RubeAllStack extends cdk.Stack {
   /**
    *
    * @param {cdk.Construct} scope
@@ -24,12 +24,44 @@ class RubeEc2Stack extends cdk.Stack {
    * @param {cdk.StackProps=} props
    */
   async executeStack(scope, id, props) {    
-    var vpc = props.vpc.current;
-    
-    // Load/Fetch the existing app security group 
-    var lookup = new utils.Lookup(props);
-    var clientSecurityGroup = await lookup.getAppSecurityGroup(this);
+    // Create a VPC
+    const vpc = new ec2.Vpc(this, "vpc", {
+        maxAzs: props.vpc.maxAzs,
+        subnetConfiguration: [
+            {
+                cidrMask: 24,
+                name: 'public',
+                subnetType: ec2.SubnetType.PUBLIC,
+            }
+        ]
+    });
+
   
+    new s3.Bucket(this, props.s3.inputBucket, {
+      versioned: false,
+      bucketName: props.s3.inputBucket,
+      publicReadAccess: false,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      removalPolicy: cdk.RemovalPolicy.DESTROY
+    });
+    
+    new s3.Bucket(this, props.s3.outputBucket, {
+      versioned: false,
+      bucketName: props.s3.outputBucket,
+      publicReadAccess: false,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      removalPolicy: cdk.RemovalPolicy.DESTROY
+    });
+    
+    // Security group for the guestbook app
+    let clientSecurityGroup = new ec2.SecurityGroup(this, props.instance.securityGroupName, {
+      vpc: vpc,
+      description: "Security Group App",
+    });
+    
+    // Tag the security group so it can be looked up easily
+    cdk.Tag.add(clientSecurityGroup, 'cdk-name-lookup', props.instance.securityGroupName);    
+    
     const trustedRemoteNetwork = ec2.Peer.anyIpv4();
     const httpPort = ec2.Port.tcp(80);
     clientSecurityGroup.addIngressRule(
@@ -89,4 +121,4 @@ class RubeEc2Stack extends cdk.Stack {
   }
 }
 
-module.exports = { RubeEc2Stack }
+module.exports = { RubeAllStack }
