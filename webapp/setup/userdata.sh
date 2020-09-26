@@ -23,9 +23,8 @@ sudo /sbin/mkswap /var/swap.1
 sudo /sbin/swapon /var/swap.1
 
 sudo php composer.phar require aws/aws-sdk-php
+sudo php /var/www/html/app/conf/install.php
 
 sudo chown apache:apache /var/www/html/ -R
 
 sudo systemctl restart php-fpm
-
-
