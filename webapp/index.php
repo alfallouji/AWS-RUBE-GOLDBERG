@@ -66,7 +66,7 @@ if (file_exists(MSG_FILENAME)) {
 
                     $menus = array(
                         'instructions' => 'instructions',
-                        'Send a message' => '?',
+                        'Send / Check a message' => '?',
                         's3 replication' => 'replication',
                     );
                     foreach ($menus as $menu => $link) {
