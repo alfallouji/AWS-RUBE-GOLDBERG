@@ -1,7 +1,9 @@
-<?php 
-session_start(); 
-if (!isset($_SESSION['messages'])) { 
-    $_SESSION['messages'] = array(); 
+<?php
+DEFINE('MSG_FILENAME', sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'messages.php');
+if (file_exists(MSG_FILENAME)) {
+     $messages = include(MSG_FILENAME);
+} else {
+     $messages = array();
 }
 ?>
 <html>
@@ -10,15 +12,15 @@ if (!isset($_SESSION['messages'])) {
             body { padding-top: 50px; }
             .starter-template {
               padding: 40px 15px;
-              
+
             }
             img { margin-bottom:50px; margin-top: 5px; }
             .list-group-item {
                 display: list-item !important;
-            }    
+            }
             @import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700");
             ol {
-              
+
               counter-reset: my-awesome-counter;
               list-style: none;
               padding-left: 40px;
@@ -45,7 +47,7 @@ if (!isset($_SESSION['messages'])) {
               border-radius: 50%;
               text-align: center;
               box-shadow: 1px 1px 0 #999;
-            }            
+            }
         </style>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
         <title>Rube Goldberg Challenge</title>
@@ -56,24 +58,24 @@ if (!isset($_SESSION['messages'])) {
                 <div class="navbar-header">
                   <a class="navbar-brand" href="?action=instructions">Rube Goldberg Challenge</a>
                 </div>
-                
+
              <div id="navbar" class="collapse navbar-collapse">
                <ul class="nav navbar-nav">
                   <?php
                     $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : '?';
-                  
+
                     $menus = array(
                         'instructions' => 'instructions',
                         'Send a message' => '?',
-                        's3 replication' => 'replication',                        
+                        's3 replication' => 'replication',
                     );
-                    foreach ($menus as $menu => $link) { 
+                    foreach ($menus as $menu => $link) {
                         $class = '';
-                        if ($action == $link) { 
+                        if ($action == $link) {
                             $class = ' class="active"';
                         }
-                        if ($link != '?') { 
-                            $link = '?action=' . $link; 
+                        if ($link != '?') {
+                            $link = '?action=' . $link;
                         }
                         echo '<li' . $class . '><a href="' . $link . '">' . ucfirst($menu) . '</a></li>';
                     }
@@ -112,10 +114,11 @@ if (!isset($_SESSION['messages'])) {
                                 echo 'There was an error uploading the file.\n';
                                 print_r($e);
                             }
-                            
+
                             echo '<h4>Message generated and sent : ' . $message . '</h4>';
-                            echo '<h4 style="margin-top:20px;"><a href="?action=check&id=' . $id . '">Check message in the output bucket</a></h4>';                                                        
-                            $_SESSION['messages'][] = $id;
+                            echo '<h4 style="margin-top:20px;"><a href="?action=check&id=' . $id . '">Check message in the output bucket</a></h4>';
+                            $messages[date("Y-m-d H:i:s")] = $id;
+                            file_put_contents(MSG_FILENAME, '<?php return ' . var_export($messages, true) . ';');
                         break;
 
                         case 'check':
@@ -128,7 +131,7 @@ if (!isset($_SESSION['messages'])) {
                                     'Key'    => $objectName,
                                 ));
                             } catch (Aws\S3\Exception\S3Exception $e) {
-                                echo '<h4>There was an error fetching the message. Did you just create that message? If yes, you may want to try in a few seconds.</h4>';
+                                echo '<h4>There was an error fetching message: ' . $id . '<br/><br/>Did you just create that message? If yes, you may want to try in a few seconds.</h4>';
                                 echo '<h4 style="margin-top:20px;"><a href="?action=check&id=' . $id . '">Check again</a></h4>';
                             }
 
@@ -140,8 +143,8 @@ if (!isset($_SESSION['messages'])) {
 
                         case 'deactivate':
                             $json = isset($_REQUEST['replicationConfiguration']) ? $_REQUEST['replicationConfiguration'] : null;
-                            if ($json) { 
-                                $replicationConfiguration = json_decode($json, true); 
+                            if ($json) {
+                                $replicationConfiguration = json_decode($json, true);
                                 $replicationConfiguration['Rules'][0]['Status'] = 'Disabled';
                                 $bucketName = $config['bucket-input'];
                                 $replicationStatus = 'n/a';
@@ -157,7 +160,7 @@ if (!isset($_SESSION['messages'])) {
                                 }
                             }
                         break;
-                        
+
                         case 'replication':
                             $bucketName = $config['bucket-input'];
                             $replicationStatus = 'n/a';
@@ -169,36 +172,36 @@ if (!isset($_SESSION['messages'])) {
                             } catch (Aws\S3\Exception\S3Exception $e) {
                                 echo '<h4>Error while fetching S3 configuration rule.</h4>';
                                 var_dump($e->errorMessage);
-                            }  
+                            }
                             echo 'Current status of the S3 Replication : <strong>' . $replicationStatus . '</strong>';
-                            if ($replicationStatus == 'Enabled') { 
+                            if ($replicationStatus == 'Enabled') {
 ?>
                                 <form id='frm' action='?action=deactivate' method='post'style="margin-top:20px;">
-                                     <input type="hidden" id="replicationConfiguration" name="replicationConfiguration" value='<?php echo json_encode($configReplication['ReplicationConfiguration']); ?>' /> 
+                                     <input type="hidden" id="replicationConfiguration" name="replicationConfiguration" value='<?php echo json_encode($configReplication['ReplicationConfiguration']); ?>' />
                                      <input class="btn btn-success btn-lg" type='submit' id='submit' name='submit' value='Deactivate replication, I will build my own RGM' />
-                                </form>      
+                                </form>
 <?php
                             }
                         break;
-                        
+
                         case 'instructions':
 ?>
                             <h1>Initial Rube Goldberg Machine (RBM) in AWS</h1>
-                            <p class="lead">A simple RBM - send a message via this webapp that will get automatically replicated from one S3 bucket to another. The message is kept as-is and the replication happens within 15 minutes (usually much faster).</p>
+                            <p class="lead">A simple RBM - send a message via this webapp that will get automatically replicated from one S3 bucket to another. The message is kept as-is and thereplication happens within 15 minutes (usually much faster).</p>
                             <img src="img/1.png" />
-                            
+
                             <p class="lead">You can also use this webapp to check if the message has been successfully delivered into the output/destination bucket.</p>
                             <img src="img/2.png" />
 
                             <h1>Create your own Rube Goldberg Machine in AWS</h1>
-                            <p class="lead"><a href="?action=replication">Deactivate the S3 replication</a> and replace it with your own RBM. You have to make sure that the message in the input bucket ultimately gets delivered in the output bucket. Make sure to read the rules of engagement below.</p>
+                            <p class="lead"><a href="?action=replication">Deactivate the S3 replication</a> and replace it with your own RBM. You have to make sure that the message in the inputbucket ultimately gets delivered in the output bucket. Make sure to read the rules of engagement below.</p>
                             <img src="img/3.png" />
-                            
+
                             <h1>Rules of engagement</h1>
                             <div class="panel panel-primary">
                               <!-- Default panel contents -->
                               <div class="panel-heading">If you want to win this contest, it is important to respect the following rules.</div>
-                            
+
                               <!-- List group -->
                               <ol class="list-group">
                                 <li class="list-group-item">Do not delete or modify the configuration of the input, output buckets and this EC2 instance.</li>
@@ -209,24 +212,24 @@ if (!isset($_SESSION['messages'])) {
                                 <li class="list-group-item">You should present your demo in the following order : First, start by generating a new message via this webapp. Then, show us an overview of the architecture of your Rube Goldberg machine and finally show us the output (using this webapp).</li>
                                 <li class="list-group-item">The following services are not available to be used: route53, etc. </li>
                                 <li class="list-group-item">The key to victory is to think out of the box. Surprise (positively) the jury and you may have a chance to earn some bonus points.</li>
-                                <li class="list-group-item">Every team starts with 0 point. Again, the services used by the initial RBM do not count (e.g. S3, EC2 instance). Therefore, you will get points if you use those in your RBM.</li>
+                                <li class="list-group-item">Every team starts with 0 point. Again, the services used by the initial RBM do not count (e.g. S3, EC2 instance). Therefore, you willget points if you use those in your RBM.</li>
                                 <li class="list-group-item">You can use the console to provision and configure the new resources. If you automate the creation and configuration of a specific service via a script (e.g. cloudformation), you will double your points for that specific service.</li>
                                 <li class="list-group-item">If you have a question or are stuck, don't hesitate to ask for some help from an AWS specialist.</li>
                               </ol>
-                            </div>                   
+                            </div>
 <?php
                         break;
-                        
+
                         default:
                     ?>
                             <form id='frm' action='?action=send' method='post'>
                                  <input class="btn btn-success btn-lg" type='submit' id='submit' name='submit' value='Something for nothing...' />
-                            </form>                           
-                    <?php                    
-                            if (!empty($_SESSION['messages'])) {
-                                echo '<h4 style="margin-top:40px;">Previous messages</h4><ul>';
-                                foreach ($_SESSION['messages'] as $message) {
-                                    echo '<li><a href="?action=check&id=' . $message . '">' . $message . '</a></li>';
+                            </form>
+                    <?php
+                            if (!empty($messages)) {
+                                echo '<h4 style="margin-top:40px;">Previous messages (oldest first)</h4><ul>';
+                                foreach ($messages as $time => $message) {
+                                    echo '<li>[' . $time . '] <a href="?action=check&id=' . $message . '">' . $message . '</a></li>';
                                 }
                                 echo '</ul>';
                             }
