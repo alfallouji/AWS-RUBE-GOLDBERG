@@ -114,7 +114,7 @@ if (!isset($_SESSION['messages'])) {
                             }
                             
                             echo '<h4>Message generated and sent : ' . $message . '</h4>';
-                            echo '<h4>Check output <a href="?action=check&id=' . $id . '">here</a></h4>';
+                            echo '<h4 style="margin-top:20px;"><a href="?action=check&id=' . $id . '">Check message in the output bucket</a></h4>';                                                        
                             $_SESSION['messages'][] = $id;
                         break;
 
@@ -129,7 +129,7 @@ if (!isset($_SESSION['messages'])) {
                                 ));
                             } catch (Aws\S3\Exception\S3Exception $e) {
                                 echo '<h4>There was an error fetching the message. Did you just create that message? If yes, you may want to try in a few seconds.</h4>';
-                                echo '<h4><a href="?action=check&id=' . $id . '">Check again</a></h4>';
+                                echo '<h4 style="margin-top:20px;"><a href="?action=check&id=' . $id . '">Check again</a></h4>';
                             }
 
                             if (isset($message['Body'])) {
