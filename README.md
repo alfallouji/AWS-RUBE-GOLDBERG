@@ -13,6 +13,7 @@
 <img src="https://github.com/alfallouji/AWS-RUBE-GOLDBERG/raw/master/webapp/img/3.png" />
 
 <h1>An example of an RGM</h1>
+<p class="lead">In this example below, the RGM is using 11 different services to replicate the message from the input to the output buckets. This RGM awards 110 points.</p>
 <img src="https://github.com/alfallouji/AWS-RUBE-GOLDBERG/raw/master/webapp/img/rgm-1.png" />
 
 <h1>Rules of engagement</h1>
