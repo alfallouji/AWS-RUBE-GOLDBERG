@@ -12,6 +12,9 @@
 <p class="lead">Your first step is to deactivate the S3 replication and replace it with your own Rube Goldberg Machine. You have to make sure that the message in the input bucket ultimately gets delivered in the output bucket. Make sure to read the rules of engagement below.</p>
 <img src="https://github.com/alfallouji/AWS-RUBE-GOLDBERG/raw/master/webapp/img/3.png" />
 
+<h1>An example of an RGM</h1>
+<img src="https://github.com/alfallouji/AWS-RUBE-GOLDBERG/raw/master/webapp/img/rgm-1.png" />
+
 <h1>Rules of engagement</h1>
 <div class="panel panel-primary">
   <!-- Default panel contents -->
