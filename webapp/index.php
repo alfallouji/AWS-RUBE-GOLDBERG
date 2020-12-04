@@ -103,7 +103,7 @@ if (file_exists(MSG_FILENAME)) {
                             $id = md5(uniqid());
                             $bucketName = $config['bucket-input'];
                             $objectName = 'message-' . $id;
-                            $message = json_encode(array('id' => $id, 'timestamp' =>  gmdate("Y-m-d\TH:i:s\Z")));
+                            $message = json_encode(array('id' => $id, 'data' => 'unicorn_' . uniqid(), 'timestamp' =>  gmdate("Y-m-d\TH:i:s\Z")));
                             try {
                                 $s3->putObject(array(
                                     'Bucket' => $bucketName,
